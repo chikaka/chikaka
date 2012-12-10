@@ -1,0 +1,1 @@
+insert into "Account"(avatar, email, "firstName", "lastName", login, password) values ('default.png', 'test@test.com', 'douda','chadoud', 'doudo','chikaka');

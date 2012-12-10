@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<configuration>
+<rootpath>"/rest"</rootpath>
+<rest>
+<applicationclass>
+<package>tn.espritcs.chikaka.rest</package>
+<name>/home/mirk/Workspaces/studies/jee2/chikaka/src/main/java/tn/espritcs/chikaka/rest/JaxRsActivator.java</name>
+</applicationclass>
+</rest>
+</configuration>
