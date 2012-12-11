@@ -6,19 +6,18 @@ import java.io.Serializable                ;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name="\"Account\"")
 @SuppressWarnings("serial")
 public class Account implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
-	@NotNull @Column(name="\"email\""    ,length=50, unique=true)private String email    ;
-	@NotNull @Column(name="\"login\""    ,length=50, unique=true)private String login    ;
-	@NotNull @Column(name="\"avatar\""   ,length=50             )private String avatar   ;
-	@NotNull @Column(name="\"password\"" ,length=50             )private String password ;
-	@NotNull @Column(name="\"lastName\"" ,length=50             )private String lastName ;
-	@NotNull @Column(name="\"firstName\"",length=50             )private String firstName;
+	@NotNull @Column(length=50, unique=true)private String email    ;
+	@NotNull @Column(length=50, unique=true)private String login    ;
+	@NotNull @Column(length=50             )private String avatar   ;
+	@NotNull @Column(length=50             )private String password ;
+	@NotNull @Column(length=50             )private String lastName ;
+	@NotNull @Column(length=50             )private String firstName;
 
 	@OneToMany(mappedBy = "account", fetch=FetchType.EAGER)
 	private Set<Session> sessions;

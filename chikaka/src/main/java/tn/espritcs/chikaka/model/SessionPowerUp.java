@@ -4,7 +4,6 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table(name="\"SessionPowerUp\"")
 public class SessionPowerUp implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -13,11 +12,11 @@ public class SessionPowerUp implements Serializable {
 	private int id;
 
 	@ManyToOne
-	@JoinColumn(name = "session")
+	@JoinColumn(name = "session", insertable=false, updatable=false)
 	private Session sessions;
 
 	@ManyToOne
-	@JoinColumn(name = "powerup")
+	@JoinColumn(name = "powerup", insertable=false, updatable=false)
 	private PowerUp powerup;
 
 	public SessionPowerUp() {}

@@ -4,7 +4,6 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table(name="\"GameRule\"")
 public class GameRule implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -13,11 +12,11 @@ public class GameRule implements Serializable {
 	private int id;
 
 	@ManyToOne
-	@JoinColumn(name = "game")
+	@JoinColumn(name = "game", insertable=false, updatable=false)
 	private Game game;
 
 	@ManyToOne
-	@JoinColumn(name = "rule")
+	@JoinColumn(name = "rule", insertable=false, updatable=false)
 	private Rule rule;
 
 	public GameRule() {}

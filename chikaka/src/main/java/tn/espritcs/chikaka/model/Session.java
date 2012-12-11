@@ -8,7 +8,7 @@ import tn.espritcs.chikaka.model.utils.Role;
 import java.io.Serializable;
 
 @Entity
-@Table(name="\"Session\"", uniqueConstraints={@UniqueConstraint(columnNames={"session", "game"})})
+@Table(uniqueConstraints={@UniqueConstraint(columnNames={"account", "game"})})
 public class Session implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -16,16 +16,16 @@ public class Session implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
-	@Column(name="\"role\""  )private Role    role  ;
-	@Column(name="\"score\"" )private int     score ;
-	@Column(name="\"winner\"")private boolean winner;
+	private Role    role  ;
+	private int     score ;
+	private boolean winner;
 
 	@ManyToOne
-	@JoinColumn(name = "session")
+	@JoinColumn(name = "account", insertable=false, updatable=false)
 	private Account account;
 
 	@ManyToOne
-	@JoinColumn(name = "game")
+	@JoinColumn(name = "game", insertable=false, updatable=false)
 	private Game game;
 
 	@OneToMany(mappedBy = "sessions")

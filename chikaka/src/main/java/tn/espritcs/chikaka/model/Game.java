@@ -8,7 +8,6 @@ import javax.persistence.* ;
 import java.io.Serializable;
 
 @Entity
-@Table(name="\"Game\"")
 public class Game implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -17,10 +16,10 @@ public class Game implements Serializable {
 	private int id;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="\"date\""             )private Date date             ;
-	@Column(name="\"initialCredit\""    )private int  initialCredit    ;
-	@Column(name="\"aiPlayersCount\""   )private int  aiPlayersCount   ;
-	@Column(name="\"humanplayersCount\"")private int  humanplayersCount;
+	private Date date             ;
+	private int  initialCredit    ;
+	private int  aiPlayersCount   ;
+	private int  humanplayersCount;
 
 	@OneToMany(mappedBy = "game")
 	private List<Session> sessions;

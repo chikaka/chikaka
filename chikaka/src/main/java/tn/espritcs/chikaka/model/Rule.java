@@ -6,7 +6,6 @@ import java.io.Serializable                ;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name="\"Rule\"")
 public class Rule implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -14,9 +13,9 @@ public class Rule implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
-	@NotNull @Column(name="\"label\""      , length=100)private String label      ;
-	@NotNull @Column(name="\"graphic\""    , length=100)private String graphic    ;
-	@NotNull @Column(name="\"description\"", length=100)private String description;
+	@NotNull @Column(length=100)private String label      ;
+	@NotNull @Column(length=100)private String graphic    ;
+	@NotNull @Column(length=100)private String description;
 
 	@OneToMany(mappedBy = "rule")
 	private Set<GameRule> gameRules;

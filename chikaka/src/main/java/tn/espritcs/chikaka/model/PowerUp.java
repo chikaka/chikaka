@@ -8,7 +8,6 @@ import java.io.Serializable;
 import java.util.List;
 
 @Entity
-@Table(name="\"PowerUp\"")
 public class PowerUp implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -16,10 +15,10 @@ public class PowerUp implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
-	@NotNull @Column(name="\"cost\""       )private int    cost       ;
-	@NotNull @Column(name="\"label\""      )private String label      ;
-	@NotNull @Column(name="\"graphic\""    )private String graphic    ;
-	@NotNull @Column(name="\"description\"")private String description;
+	@NotNull private int    cost       ;
+	@NotNull private String label      ;
+	@NotNull private String graphic    ;
+	@NotNull private String description;
 
 	@OneToMany(mappedBy = "powerup")
 	private List<SessionPowerUp> sessionsPowerUps;
