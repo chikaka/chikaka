@@ -9,8 +9,10 @@ import javax.inject.Inject;
 
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
-import tn.espritcs.chikaka.model.Account;
-import tn.espritcs.chikaka.model.Session;
+
+import tn.espritcs.chikaka.model.authentification.SystemUser;
+import tn.espritcs.chikaka.model.game.Account;
+import tn.espritcs.chikaka.model.game.Session;
 import tn.espritcs.chikaka.model.utils.Role;
 import tn.espritcs.chikaka.service.AccountServices;
 import tn.espritcs.chikaka.util.Resources;
@@ -47,7 +49,7 @@ public class AccountRegistrationTest {
 		Account newAccount = initAccount("default.png","test@test.com","douda","chadoud","doudo","chikaka");
 		accountService.register(newAccount);
 		assertNotNull(newAccount.getId());
-		log.info(newAccount.getLogin() + " was persisted with id " + newAccount.getId());
+		log.info(newAccount.getUser().getUserName() + " was persisted with id " + newAccount.getId());
 	}
 
 	@Test
@@ -69,13 +71,15 @@ public class AccountRegistrationTest {
 	}
 	
 	private Account initAccount(String avatar, String email, String firstName, String lastName, String login, String password){
+		SystemUser user = new SystemUser();
+		user.setUserName(login);
+		user.setPassword(password);
 		Account account = new Account();
 		account.setAvatar(avatar);
 		account.setEmail(email);
 		account.setFirstName(firstName);
 		account.setLastName(lastName);
-		account.setLogin(login);
-		account.setPassword(password);
+		account.setUser(user);
 		account.setSessions(new HashSet<Session>());
 		return account;
 	}

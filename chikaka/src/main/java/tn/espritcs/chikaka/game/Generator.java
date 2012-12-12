@@ -5,8 +5,8 @@ import java.io.Serializable;
 
 import javax.enterprise.context.SessionScoped;
 
-import tn.espritcs.chikaka.model.Game;
-import tn.espritcs.chikaka.model.Session;
+import tn.espritcs.chikaka.model.game.Game;
+import tn.espritcs.chikaka.model.game.Session;
 import tn.espritcs.chikaka.model.utils.Role;
 
 @SessionScoped

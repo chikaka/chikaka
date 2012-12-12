@@ -1,14 +1,14 @@
-package tn.espritcs.chikaka.model;
+package tn.espritcs.chikaka.model.game;
 
 import java.util.Set                       ;
 import javax.persistence.*                 ;
+
 import java.io.Serializable                ;
 import javax.validation.constraints.NotNull;
 
 @Entity
+@SuppressWarnings("serial")
 public class Rule implements Serializable {
-	private static final long serialVersionUID = 1L;
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;

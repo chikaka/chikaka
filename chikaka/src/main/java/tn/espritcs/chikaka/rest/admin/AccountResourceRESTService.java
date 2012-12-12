@@ -1,4 +1,4 @@
-package tn.espritcs.chikaka.rest;
+package tn.espritcs.chikaka.rest.admin;
 
 import java.util.HashMap;
 import java.util.List;
@@ -18,10 +18,10 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import tn.espritcs.chikaka.model.Account;
+import tn.espritcs.chikaka.model.game.Account;
 import tn.espritcs.chikaka.service.AccountServices;
 
-@Path("/accounts")
+@Path("/admin/accounts")
 @RequestScoped
 public class AccountResourceRESTService {
    @Inject

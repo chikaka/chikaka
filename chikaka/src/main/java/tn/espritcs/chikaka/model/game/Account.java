@@ -1,9 +1,11 @@
-package tn.espritcs.chikaka.model;
+package tn.espritcs.chikaka.model.game;
 
 import java.util.Set                       ;
 import javax.persistence.*                 ;
 import java.io.Serializable                ;
 import javax.validation.constraints.NotNull;
+
+import tn.espritcs.chikaka.model.authentification.SystemUser;
 
 @Entity
 @SuppressWarnings("serial")
@@ -13,31 +15,30 @@ public class Account implements Serializable {
 	private int id;
 	
 	@NotNull @Column(length=50, unique=true)private String email    ;
-	@NotNull @Column(length=50, unique=true)private String login    ;
 	@NotNull @Column(length=50             )private String avatar   ;
-	@NotNull @Column(length=50             )private String password ;
 	@NotNull @Column(length=50             )private String lastName ;
 	@NotNull @Column(length=50             )private String firstName;
 
-	@OneToMany(mappedBy = "account", fetch=FetchType.EAGER)
+	@NotNull @OneToMany(mappedBy = "account", fetch=FetchType.EAGER)
 	private Set<Session> sessions;
+	
+	@OneToOne
+	private SystemUser user;
 
 	public Account() {}
 
 	public int          getId       () {return id       ;}
+	public SystemUser         getUser     () {return user     ;}
 	public String       getEmail    () {return email    ;}
-	public String       getLogin    () {return login    ;}
 	public String       getAvatar   () {return avatar   ;}
-	public String       getPassword () {return password ;}
 	public String       getLastName () {return lastName ;}
 	public Set<Session> getSessions () {return sessions ;}
 	public String       getFirstName() {return firstName;}
 
 	public void setId       (int          id       ) {this.id        = id       ;}
+	public void setUser     (SystemUser         user     ) {this.user      = user     ;}
 	public void setEmail    (String       email    ) {this.email     = email    ;}
-	public void setLogin    (String       login    ) {this.login     = login    ;}
 	public void setAvatar   (String       avatar   ) {this.avatar    = avatar   ;}
-	public void setPassword (String       password ) {this.password  = password ;}
 	public void setLastName (String       lastName ) {this.lastName  = lastName ;}
 	public void setSessions (Set<Session> sessions ) {this.sessions  = sessions ;}
 	public void setFirstName(String       firstName) {this.firstName = firstName;}

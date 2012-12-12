@@ -1,11 +1,12 @@
 package tn.espritcs.chikaka.service;
 
-import tn.espritcs.chikaka.model.Account;
+import tn.espritcs.chikaka.model.game.Account;
 
 import javax.ejb.Stateless;
 import javax.enterprise.event.Event;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+
 import java.util.logging.Logger;
 
 @Stateless
@@ -21,7 +22,7 @@ public class AccountServices {
 	private Event<Account> memberEventSrc;
 
 	public void register(Account account) throws Exception {
-		log.info("Registering " + account.getLogin());
+		log.info("Registering " + account.getUser());
 		em.persist(account);
 		memberEventSrc.fire(account);
 	}
@@ -34,11 +35,10 @@ public class AccountServices {
 			throw new Exception("Request object not found in the database");
 		}
 		
+		oldAccount.setUser     (account.getUser     ());
 		oldAccount.setEmail    (account.getEmail    ());
-		oldAccount.setLogin    (account.getLogin    ());
 		oldAccount.setAvatar   (account.getAvatar   ());
 		oldAccount.setLastName (account.getLastName ());
-		oldAccount.setPassword (account.getPassword ());
 		oldAccount.setFirstName(account.getFirstName());
 		
 		em.persist(oldAccount);

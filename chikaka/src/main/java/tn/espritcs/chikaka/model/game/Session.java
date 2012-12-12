@@ -1,4 +1,4 @@
-package tn.espritcs.chikaka.model;
+package tn.espritcs.chikaka.model.game;
 
 import java.util.Set       ;
 import javax.persistence.* ;
@@ -8,10 +8,9 @@ import tn.espritcs.chikaka.model.utils.Role;
 import java.io.Serializable;
 
 @Entity
+@SuppressWarnings("serial")
 @Table(uniqueConstraints={@UniqueConstraint(columnNames={"account", "game"})})
 public class Session implements Serializable {
-	private static final long serialVersionUID = 1L;
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
@@ -28,7 +27,7 @@ public class Session implements Serializable {
 	@JoinColumn(name = "game", insertable=false, updatable=false)
 	private Game game;
 
-	@OneToMany(mappedBy = "sessions")
+	@OneToMany(mappedBy = "session")
 	private Set<SessionPowerUp> sessionsPowerUps;
 
 	public Session() {}

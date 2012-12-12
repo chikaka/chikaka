@@ -9,7 +9,7 @@ import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import tn.espritcs.chikaka.model.Account;
+import tn.espritcs.chikaka.model.game.Account;
 import tn.espritcs.chikaka.service.AccountServices;
 
 @Model
