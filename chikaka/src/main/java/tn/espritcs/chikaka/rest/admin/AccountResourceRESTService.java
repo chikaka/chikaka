@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.security.RolesAllowed;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -22,6 +23,7 @@ import tn.espritcs.chikaka.model.game.Account;
 import tn.espritcs.chikaka.service.AccountServices;
 
 @Path("/admin/accounts")
+@RolesAllowed({"Admin"})
 @RequestScoped
 public class AccountResourceRESTService {
    @Inject
