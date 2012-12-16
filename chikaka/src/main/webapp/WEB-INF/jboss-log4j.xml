@@ -9,12 +9,13 @@
      <appender-ref ref="Sec"/>
      <appender-ref ref="CONSOLE"/>
    </logger>
-   <logger category="org.jboss.web.tomcat.security">
-     <level name="TRACE" />
-     <appender-ref ref="Sec"/>
-     <appender-ref ref="CONSOLE"/>
+   
+   <logger category="org.jboss.security.auth">
+     <level name="TRACE"/>
    </logger>
-   <logger category="org.apache.catalina">
+   
+   
+    <logger category="javax.security.auth">
      <level name="TRACE" />
      <appender-ref ref="Sec"/>
      <appender-ref ref="CONSOLE"/>
