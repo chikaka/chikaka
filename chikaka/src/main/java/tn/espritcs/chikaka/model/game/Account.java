@@ -28,7 +28,7 @@ public class Account implements Serializable {
 	public Account() {}
 
 	public int          getId       () {return id       ;}
-	public SystemUser         getUser     () {return user     ;}
+	public SystemUser   getUser     () {return user     ;}
 	public String       getEmail    () {return email    ;}
 	public String       getAvatar   () {return avatar   ;}
 	public String       getLastName () {return lastName ;}
@@ -36,7 +36,7 @@ public class Account implements Serializable {
 	public String       getFirstName() {return firstName;}
 
 	public void setId       (int          id       ) {this.id        = id       ;}
-	public void setUser     (SystemUser         user     ) {this.user      = user     ;}
+	public void setUser     (SystemUser   user     ) {this.user      = user     ;}
 	public void setEmail    (String       email    ) {this.email     = email    ;}
 	public void setAvatar   (String       avatar   ) {this.avatar    = avatar   ;}
 	public void setLastName (String       lastName ) {this.lastName  = lastName ;}
