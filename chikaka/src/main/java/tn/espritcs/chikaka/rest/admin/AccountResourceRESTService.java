@@ -4,9 +4,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.security.DenyAll;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -24,13 +26,14 @@ import tn.espritcs.chikaka.service.AccountServices;
 @Path("/admin/accounts")
 @RequestScoped
 public class AccountResourceRESTService {
-   @Inject
+   @PersistenceContext(unitName = "primary")
    private EntityManager em;
    
    @Inject
    private AccountServices registry;
 
    @GET
+   @DenyAll
    @Produces(MediaType.APPLICATION_JSON)
    public List<Account> listAllAccounts() {
       @SuppressWarnings("unchecked")

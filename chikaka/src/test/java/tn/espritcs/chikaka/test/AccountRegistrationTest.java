@@ -3,8 +3,6 @@ package tn.espritcs.chikaka.test;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.*;
 import java.util.HashSet;
-import java.util.logging.Logger;
-
 import javax.inject.Inject;
 
 import org.jboss.arquillian.container.test.api.Deployment;
@@ -15,7 +13,6 @@ import tn.espritcs.chikaka.model.game.Account;
 import tn.espritcs.chikaka.model.game.Session;
 import tn.espritcs.chikaka.model.utils.Role;
 import tn.espritcs.chikaka.service.AccountServices;
-import tn.espritcs.chikaka.util.Resources;
 import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
@@ -32,7 +29,6 @@ public class AccountRegistrationTest {
 				.addPackages(true, Role.class.getPackage())
 				.addPackages(true, Account.class.getPackage())
 				.addPackages(true, AccountServices.class.getPackage())
-				.addClass(Resources.class)
 				.addAsResource("META-INF/persistence.xml", "META-INF/persistence.xml")
 				.addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml")
 				.addAsWebInfResource("test-ds.xml", "test-ds.xml");
@@ -41,15 +37,11 @@ public class AccountRegistrationTest {
 	@Inject
 	AccountServices accountService;
 
-	@Inject
-	Logger log;
-
 	@Test
 	public void testRegister() throws Exception {
 		Account newAccount = initAccount("default.png","test@test.com","douda","chadoud","doudo","chikaka");
 		accountService.register(newAccount);
 		assertNotNull(newAccount.getId());
-		log.info(newAccount.getUser().getUserName() + " was persisted with id " + newAccount.getId());
 	}
 
 	@Test
@@ -66,7 +58,6 @@ public class AccountRegistrationTest {
 			accountService.register(newAccount2);
 			fail("Expected exception");
 		} catch (Exception e) {
-			log.info("Expected exception of type :" + e.getClass());
 		}
 	}
 	
