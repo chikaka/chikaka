@@ -12,6 +12,7 @@ import javax.persistence.PersistenceContext;
 public class Resources {
    @Produces
    @PersistenceContext
+   @SuppressWarnings("unused")
    private EntityManager em;
    
    @Produces
