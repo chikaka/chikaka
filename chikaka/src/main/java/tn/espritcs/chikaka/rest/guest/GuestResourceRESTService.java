@@ -24,7 +24,7 @@ public class GuestResourceRESTService {
    @Produces(MediaType.APPLICATION_JSON)
    @PermitAll
    public Response hello() {
-	   boolean s = securityContext.isUserInRole("1");
+	   boolean s = securityContext.isUserInRole("Admin");
 	   Response.ResponseBuilder builder = Response.ok().entity("Chikakaka to " + securityContext.getUserPrincipal().getName()+ " => "+ s);
 	   return builder.build();
    }
