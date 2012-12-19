@@ -2,7 +2,6 @@ package tn.espritcs.chikaka.test;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.*;
-import java.util.HashSet;
 import javax.inject.Inject;
 
 import org.jboss.arquillian.container.test.api.Deployment;
@@ -10,7 +9,6 @@ import org.jboss.arquillian.junit.Arquillian;
 
 import tn.espritcs.chikaka.model.authentification.SystemUser;
 import tn.espritcs.chikaka.model.game.Account;
-import tn.espritcs.chikaka.model.game.Session;
 import tn.espritcs.chikaka.model.utils.Role;
 import tn.espritcs.chikaka.service.AccountServices;
 import org.jboss.shrinkwrap.api.Archive;
@@ -64,14 +62,13 @@ public class AccountRegistrationTest {
 	private Account initAccount(String avatar, String email, String firstName, String lastName, String login, String password){
 		SystemUser user = new SystemUser();
 		user.setUserName(login);
-		user.setPassword(password);
+		user.changePassword(password);
 		Account account = new Account();
 		account.setAvatar(avatar);
 		account.setEmail(email);
 		account.setFirstName(firstName);
 		account.setLastName(lastName);
 		account.setUser(user);
-		account.setSessions(new HashSet<Session>());
 		return account;
 	}
 }
