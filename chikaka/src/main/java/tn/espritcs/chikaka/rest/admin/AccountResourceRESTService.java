@@ -1,15 +1,10 @@
 package tn.espritcs.chikaka.rest.admin;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.security.RolesAllowed;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -20,92 +15,86 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import tn.espritcs.chikaka.model.game.Account;
+import tn.espritcs.chikaka.model.wrappers.AccountWrapper;
 import tn.espritcs.chikaka.service.AccountServices;
 
 @Path("/admin/accounts")
 @RequestScoped
-public class AccountResourceRESTService {
-   @PersistenceContext(unitName = "primary")
-   private EntityManager em;
-   
+public class AccountResourceRESTService { 
    @Inject
-   private AccountServices registry;
+   private AccountServices accountServices;
 
    @GET
-   @Produces(MediaType.APPLICATION_JSON)
    @RolesAllowed({"Admin"})
-   public List<Account> listAllAccounts() {
-      @SuppressWarnings("unchecked")
-      final List<Account> results = em.createQuery("select a from Account a").getResultList();
-      return results;
-   }
-
-   @GET
-   @Path("/{id:[0-9][0-9]*}")
    @Produces(MediaType.APPLICATION_JSON)
-   public Account lookupAccountById(@PathParam("id") Integer id) {
-      return em.find(Account.class, id);
+   public List<AccountWrapper> listAllAccounts() {
+      return accountServices.listAllAccounts();
    }
-   
+  
    @GET
+   @RolesAllowed({"Admin"})
    @Path("/emails/{email:.*}")
    @Produces(MediaType.APPLICATION_JSON)
-   public Account lookupAccountByEmail(@PathParam("email") String email){
-	   Query query = em.createQuery("SELECT a FROM Account a WHERE a.email = :email");
-	   query.setParameter("email", email);
-	   return (Account) query.getSingleResult();
+   public AccountWrapper lookupAccountByEmail(@PathParam("email") String email){
+	   return accountServices.lookupAccountByEmail(email);
    }
    
    @POST
-   @Path("/create/single/")
+   @Path("/create/user/single/")
+   @RolesAllowed({"Admin", "Guest"})
    @Produces(MediaType.APPLICATION_JSON)
    @Consumes(MediaType.APPLICATION_JSON)
-   public Response createNewSingleAccount(Account account){
+   public Response createNewSingleAccount(AccountWrapper account, String password){
 	   Response.ResponseBuilder builder = null;
-	   try {
-           registry.register(account);
-           builder = Response.ok();
-       }catch(Exception e){
-    	   Map<String, String> responseObj = new HashMap<String, String>();
-           responseObj.put("error", e.getMessage());
-           builder = Response.status(Response.Status.BAD_REQUEST).entity(responseObj);
+       if(accountServices.register(account, password)){
+    	   builder = Response.status(Response.Status.CREATED);
+       }else{
+    	   builder = Response.status(Response.Status.BAD_REQUEST);
        }
 	   return builder.build();
    }
    
    @POST
-   @Path("/create/multiple/")
+   @Path("/create/admin/single/")
+   @RolesAllowed({"Admin"})
    @Produces(MediaType.APPLICATION_JSON)
    @Consumes(MediaType.APPLICATION_JSON)
-   public Response createNewMultipleAccount(Account[] accounts){
+   public Response createNewSingleAdminAccount(AccountWrapper account, String password){
 	   Response.ResponseBuilder builder = null;
-	   try {
-		   for(Account account : accounts){
-			   registry.register(account);
-		   }
-           builder = Response.ok();
-       }catch(Exception e){
-    	   Map<String, String> responseObj = new HashMap<String, String>();
-           responseObj.put("error", e.getMessage());
-           builder = Response.status(Response.Status.BAD_REQUEST).entity(responseObj);
+       if(accountServices.register(account, password, true)){
+    	   builder = Response.status(Response.Status.CREATED);
+       }else{
+    	   builder = Response.status(Response.Status.BAD_REQUEST);
        }
 	   return builder.build();
    }
    
    @PUT
-   @Path("/update/single/")
+   @RolesAllowed({"Admin", "User"})
+   @Path("/update/single/username/")
    @Produces(MediaType.APPLICATION_JSON)
    @Consumes(MediaType.APPLICATION_JSON)
-   public Response updateSingleAccount(Account account){
+   public Response updateSingleAccountByUserName(AccountWrapper account, String oldUserName){
 	   Response.ResponseBuilder builder = null;
-	   try {
-           registry.update(account);
-           builder = Response.ok();
-       }catch(Exception e){
-    	   Map<String, String> responseObj = new HashMap<String, String>();
-           responseObj.put("error", e.getMessage());
-           builder = Response.status(Response.Status.BAD_REQUEST).entity(responseObj);
+       if(accountServices.updateByUserName(account, oldUserName)){
+    	   builder = Response.ok();        	   
+       }else{
+    	   builder = Response.status(Response.Status.BAD_REQUEST);
+       }
+	   return builder.build();
+   }
+   
+   @PUT
+   @RolesAllowed({"Admin", "User"})
+   @Path("/update/single/email/")
+   @Produces(MediaType.APPLICATION_JSON)
+   @Consumes(MediaType.APPLICATION_JSON)
+   public Response updateSingleAccountByEmail(AccountWrapper account, String oldEmail){
+	   Response.ResponseBuilder builder = null;
+       if(accountServices.updateByEmail(account, oldEmail)){
+    	   builder = Response.ok();        	   
+       }else{
+    	   builder = Response.status(Response.Status.BAD_REQUEST);
        }
 	   return builder.build();
    }
