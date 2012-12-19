@@ -18,6 +18,7 @@ public class Session implements Serializable {
 	private Role    role  ;
 	private int     score ;
 	private boolean winner;
+	private boolean active;
 
 	@ManyToOne
 	@JoinColumn(name = "account", insertable=false, updatable=false)
@@ -37,6 +38,7 @@ public class Session implements Serializable {
 	public Game                getGame            () {return game            ;}
 	public int                 getScore           () {return score           ;}
 	public boolean             isWinner           () {return winner          ;}
+	public boolean             isActive           () {return active          ;}
 	public Account             getAccount         () {return account         ;}
 	public Set<SessionPowerUp> getSessionsPowerUps() {return sessionsPowerUps;}
 	
@@ -45,6 +47,7 @@ public class Session implements Serializable {
 	public void setGame            (Game                  game          ) {this.game             = game            ;}
 	public void setScore           (int                   score         ) {this.score            = score           ;}
 	public void setWinner          (boolean               winner        ) {this.winner           = winner          ;}
+	public void setActive          (boolean               active        ) {this.active           = active          ;}
 	public void setAccount         (Account               account       ) {this.account          = account         ;}
 	public void setSessionsPowerUps(Set<SessionPowerUp> sessionsPowerUps) {this.sessionsPowerUps = sessionsPowerUps;}
 }
