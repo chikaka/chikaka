@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.security.DenyAll;
+import javax.annotation.security.RolesAllowed;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -33,8 +33,8 @@ public class AccountResourceRESTService {
    private AccountServices registry;
 
    @GET
-   @DenyAll
    @Produces(MediaType.APPLICATION_JSON)
+   @RolesAllowed({"Admin"})
    public List<Account> listAllAccounts() {
       @SuppressWarnings("unchecked")
       final List<Account> results = em.createQuery("select a from Account a").getResultList();
