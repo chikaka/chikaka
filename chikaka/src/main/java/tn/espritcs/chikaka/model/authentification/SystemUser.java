@@ -21,13 +21,13 @@ public class SystemUser{
 	@JoinColumn(name = "role")
 	private SystemRole role;
 	
-	public int    getId      () {return id      ;}
-	public SystemRole   getRole    () {return role    ;}
-	public String getUserName() {return userName;}
-	public String getPassword() {return password;}
+	public int        getId      () {return id      ;}
+	public SystemRole getRole    () {return role    ;}
+	public String     getUserName() {return userName;}
+	public String     getPassword() {return password;}
 	
-	public void setId      (int    id      ) {this.id       = id      ;}
-	public void setRole    (SystemRole   role    ) {this.role     = role    ;}
-	public void setUserName(String userName) {this.userName = userName;}
-	public void setPassword(String password) {this.password = password;}
+	public void setId      (int        id      ) {this.id       = id      ;}
+	public void setRole    (SystemRole role    ) {this.role     = role    ;}
+	public void setUserName(String     userName) {this.userName = userName;}
+	public void setPassword(String     password) {this.password = password;}
 }
