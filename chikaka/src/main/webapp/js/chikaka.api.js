@@ -11,20 +11,20 @@ function Chikaka (){
 	
 	
 	this.get = function (url, success, failure) { 
-		initAuth("emir", "wa333");
-		this.AuthenticatedAjax(this.url(url), HTTP_GET, "", success, failure);
+		this.initAuth("emir", "wa333");
+		this.authenticatedAjax(this.url(url), HTTP_GET, "", success, failure);
 	} 
 
 	this.post = function (url, data, success, failure) { 
-		this.AuthenticatedAjax(this.url(url), HTTP_POST, data, success, failure);
+		this.authenticatedAjax(this.url(url), HTTP_POST, data, success, failure);
 	}  
 
 	this.remove = function (url, data, success, failure) { 
-		this.AuthenticatedAjax(this.url(url), HTTP_DELETE, data, success, failure);
+		this.authenticatedAjax(this.url(url), HTTP_DELETE, data, success, failure);
 	}  
 
 	this.put = function (url, data, success, failure) { 
-		this.AuthenticatedAjax(this.url(url), HTTP_PUT, data, success, failure);
+		this.authenticatedAjax(this.url(url), HTTP_PUT, data, success, failure);
 	} 
 	
 	
@@ -52,13 +52,14 @@ function Chikaka (){
 	  }
 	}
 
-	this.authenticatedAjax = function(url, metod, data, success, failure){
+	this.authenticatedAjax = function(url, method, data, success, failure){
+		chk = this;
 		$.ajax({
 		    type: method,
 		    url: url,
 		    contentType: "application/json; charset=utf-8",
 		    beforeSend: function(xhr) {
-		        xhr.setRequestHeader("Authorization", getAuthCookie());
+		        xhr.setRequestHeader("Authorization", chk.getAuthCookie());
 		    },
 		    data: data,
 		    dataType: "json",
@@ -83,7 +84,7 @@ function Chikaka (){
 		failure = function(reponse){
 			alert("wa333");
 		};
-		authenticatedAjax(url, method, data, success, failure);
+		this.authenticatedAjax(url, method, data, success, failure);
 	}
 };
  
