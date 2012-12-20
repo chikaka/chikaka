@@ -1,28 +1,39 @@
 package tn.espritcs.chikaka.rest.guest;
 
 import javax.enterprise.context.RequestScoped;
-import javax.ws.rs.GET;
+import javax.inject.Inject;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.SecurityContext;
+import javax.ws.rs.core.Response.Status;
 
-import javax.annotation.security.PermitAll;
+import javax.annotation.security.RolesAllowed;
 
-@Path("/guest/hello")
+import tn.espritcs.chikaka.model.wrappers.AccountWrapper;
+import tn.espritcs.chikaka.service.GuestServices;
+import tn.espritcs.chikaka.util.StatusMessage;
+
+@Path("/guest")
 @RequestScoped
 public class GuestResourceRESTService {
-	@Context
-    private SecurityContext securityContext;
+	@Inject
+	private GuestServices guestServices;
 	
-   @GET
-   @Produces(MediaType.APPLICATION_JSON)
-   @PermitAll
-   public Response hello() {
-	   boolean s = securityContext.isUserInRole("Admin");
-	   Response.ResponseBuilder builder = Response.ok().entity("Chikakaka to " + securityContext.getUserPrincipal().getName()+ " => "+ s);
+   @POST
+   @Path("/signup")
+   @RolesAllowed({"Guest"})
+   @Consumes(MediaType.APPLICATION_JSON)
+   public Response signUp(AccountWrapper account) {
+	   Response.ResponseBuilder builder = null;
+	   StatusMessage status = guestServices.signUp(account);
+	   if(!status.getStatus()){
+		   builder = Response.status(Status.BAD_REQUEST);
+	   }else{
+		   builder = Response.status(Status.CREATED);
+	   }
+	   builder.entity(status.getMessage());
 	   return builder.build();
    }
 }

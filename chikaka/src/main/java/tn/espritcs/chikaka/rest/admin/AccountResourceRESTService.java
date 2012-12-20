@@ -19,6 +19,7 @@ import javax.ws.rs.core.SecurityContext;
 
 import tn.espritcs.chikaka.model.wrappers.AccountWrapper;
 import tn.espritcs.chikaka.service.AccountServices;
+import tn.espritcs.chikaka.util.StatusMessage;
 
 @Path("/admin/accounts")
 @RequestScoped
@@ -46,48 +47,51 @@ public class AccountResourceRESTService {
    
    @POST
    @Path("/create/user/single/")
-   @RolesAllowed({"Admin", "Guest"})
-   @Produces(MediaType.APPLICATION_JSON)
+   @RolesAllowed({"Admin"})
    @Consumes(MediaType.APPLICATION_JSON)
    public Response createNewSingleAccount(AccountWrapper account){
 	   Response.ResponseBuilder builder = null;
 	   String password = account.retriveDispatcherCriteria();
-       if(accountServices.register(account, password)){
+	   StatusMessage status = accountServices.register(account, password);
+	   if(status.getStatus()){
     	   builder = Response.status(Response.Status.CREATED);
        }else{
     	   builder = Response.status(Response.Status.BAD_REQUEST);
        }
+	   builder.entity(status.getMessage());
 	   return builder.build();
    }
    
    @POST
    @Path("/create/admin/single/")
    @RolesAllowed({"Admin"})
-   @Produces(MediaType.APPLICATION_JSON)
    @Consumes(MediaType.APPLICATION_JSON)
    public Response createNewSingleAdminAccount(AccountWrapper account){
 	   Response.ResponseBuilder builder = null;
 	   String password = account.retriveDispatcherCriteria();
-       if(accountServices.register(account, password, true)){
+	   StatusMessage status = accountServices.register(account, password, true);
+       if(status.getStatus()){
     	   builder = Response.status(Response.Status.CREATED);
        }else{
     	   builder = Response.status(Response.Status.BAD_REQUEST);
        }
+       builder.entity(status.getMessage());
 	   return builder.build();
    }
    
    @PUT
    @RolesAllowed({"Admin", "User"})
    @Path("/update/single/username/")
-   @Produces(MediaType.APPLICATION_JSON)
    @Consumes(MediaType.APPLICATION_JSON)
    public Response updateSingleAccountByUserName(AccountWrapper account){
 	   Response.ResponseBuilder builder = null;
 	   String oldUserName = account.retriveDispatcherCriteria();
 	   if(securityContext.isUserInRole("User")){
 		   if(!oldUserName.equals(securityContext.getUserPrincipal().getName())){
-			   builder = Response.status(Response.Status.FORBIDDEN);
-	   }}else if(accountServices.updateByUserName(account, oldUserName)){
+			   return Response.status(Response.Status.FORBIDDEN).build();
+	   }}
+	   
+	   if(accountServices.updateByUserName(account, oldUserName)){
     	   builder = Response.ok();        	   
        }else{
     	   builder = Response.status(Response.Status.BAD_REQUEST);
@@ -98,14 +102,13 @@ public class AccountResourceRESTService {
    @PUT
    @RolesAllowed({"Admin", "User"})
    @Path("/update/single/email/")
-   @Produces(MediaType.APPLICATION_JSON)
    @Consumes(MediaType.APPLICATION_JSON)
    public Response updateSingleAccountByEmail(AccountWrapper account){
 	   Response.ResponseBuilder builder = null;
 	   String oldEmail = account.retriveDispatcherCriteria();
 	   if(securityContext.isUserInRole("User")){
+		   String userName   = securityContext.getUserPrincipal().getName();
 		   String emailOwner = accountServices.lookupAccountByEmail(oldEmail).getUserName();
-		   String userName = securityContext.getUserPrincipal().getName();
 		   if(!emailOwner.equals(userName)){
 			   return Response.status(Response.Status.FORBIDDEN).build();
 	   }}
