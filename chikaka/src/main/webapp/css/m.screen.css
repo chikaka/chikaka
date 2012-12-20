@@ -1,0 +1,13 @@
+body {
+   font-family: Verdana, sans-serif;
+}
+
+p {
+   margin-left: 8px;
+   margin-right: 8px;
+}
+
+a {
+   color: #369;
+   text-decoration: none;
+}
