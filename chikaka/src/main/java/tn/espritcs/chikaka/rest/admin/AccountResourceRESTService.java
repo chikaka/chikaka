@@ -105,10 +105,12 @@ public class AccountResourceRESTService {
 	   String oldEmail = account.retriveDispatcherCriteria();
 	   if(securityContext.isUserInRole("User")){
 		   String emailOwner = accountServices.lookupAccountByEmail(oldEmail).getUserName();
-		   if(!emailOwner.equals(securityContext.getUserPrincipal().getName())){
-			   builder = Response.status(Response.Status.FORBIDDEN);
-	   }}else
-       if(accountServices.updateByEmail(account, oldEmail)){
+		   String userName = securityContext.getUserPrincipal().getName();
+		   if(!emailOwner.equals(userName)){
+			   return Response.status(Response.Status.FORBIDDEN).build();
+	   }}
+	   
+	   if(accountServices.updateByEmail(account, oldEmail)){
     	   builder = Response.ok();        	   
        }else{
     	   builder = Response.status(Response.Status.BAD_REQUEST);
