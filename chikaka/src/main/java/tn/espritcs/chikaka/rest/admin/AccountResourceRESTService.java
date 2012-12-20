@@ -12,17 +12,22 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.SecurityContext;
 
 import tn.espritcs.chikaka.model.wrappers.AccountWrapper;
 import tn.espritcs.chikaka.service.AccountServices;
 
 @Path("/admin/accounts")
 @RequestScoped
-public class AccountResourceRESTService { 
-   @Inject
-   private AccountServices accountServices;
+public class AccountResourceRESTService {
+	@Context
+    private SecurityContext securityContext;
+	
+    @Inject
+    private AccountServices accountServices;
 
    @GET
    @RolesAllowed({"Admin"})
@@ -44,8 +49,9 @@ public class AccountResourceRESTService {
    @RolesAllowed({"Admin", "Guest"})
    @Produces(MediaType.APPLICATION_JSON)
    @Consumes(MediaType.APPLICATION_JSON)
-   public Response createNewSingleAccount(AccountWrapper account, String password){
+   public Response createNewSingleAccount(AccountWrapper account){
 	   Response.ResponseBuilder builder = null;
+	   String password = account.retriveDispatcherCriteria();
        if(accountServices.register(account, password)){
     	   builder = Response.status(Response.Status.CREATED);
        }else{
@@ -59,8 +65,9 @@ public class AccountResourceRESTService {
    @RolesAllowed({"Admin"})
    @Produces(MediaType.APPLICATION_JSON)
    @Consumes(MediaType.APPLICATION_JSON)
-   public Response createNewSingleAdminAccount(AccountWrapper account, String password){
+   public Response createNewSingleAdminAccount(AccountWrapper account){
 	   Response.ResponseBuilder builder = null;
+	   String password = account.retriveDispatcherCriteria();
        if(accountServices.register(account, password, true)){
     	   builder = Response.status(Response.Status.CREATED);
        }else{
@@ -74,9 +81,13 @@ public class AccountResourceRESTService {
    @Path("/update/single/username/")
    @Produces(MediaType.APPLICATION_JSON)
    @Consumes(MediaType.APPLICATION_JSON)
-   public Response updateSingleAccountByUserName(AccountWrapper account, String oldUserName){
+   public Response updateSingleAccountByUserName(AccountWrapper account){
 	   Response.ResponseBuilder builder = null;
-       if(accountServices.updateByUserName(account, oldUserName)){
+	   String oldUserName = account.retriveDispatcherCriteria();
+	   if(securityContext.isUserInRole("User")){
+		   if(!oldUserName.equals(securityContext.getUserPrincipal().getName())){
+			   builder = Response.status(Response.Status.FORBIDDEN);
+	   }}else if(accountServices.updateByUserName(account, oldUserName)){
     	   builder = Response.ok();        	   
        }else{
     	   builder = Response.status(Response.Status.BAD_REQUEST);
@@ -89,8 +100,14 @@ public class AccountResourceRESTService {
    @Path("/update/single/email/")
    @Produces(MediaType.APPLICATION_JSON)
    @Consumes(MediaType.APPLICATION_JSON)
-   public Response updateSingleAccountByEmail(AccountWrapper account, String oldEmail){
+   public Response updateSingleAccountByEmail(AccountWrapper account){
 	   Response.ResponseBuilder builder = null;
+	   String oldEmail = account.retriveDispatcherCriteria();
+	   if(securityContext.isUserInRole("User")){
+		   String emailOwner = accountServices.lookupAccountByEmail(oldEmail).getUserName();
+		   if(!emailOwner.equals(securityContext.getUserPrincipal().getName())){
+			   builder = Response.status(Response.Status.FORBIDDEN);
+	   }}else
        if(accountServices.updateByEmail(account, oldEmail)){
     	   builder = Response.ok();        	   
        }else{
