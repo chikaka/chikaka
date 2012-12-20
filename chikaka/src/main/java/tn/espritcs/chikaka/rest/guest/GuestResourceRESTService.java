@@ -15,9 +15,6 @@ import javax.annotation.security.PermitAll;
 @RequestScoped
 public class GuestResourceRESTService {
 	@Context
-	javax.security.auth.login.LoginContext lcontext;
-	
-	@Context
     private SecurityContext securityContext;
 	
    @GET
