@@ -73,6 +73,7 @@ public class AccountServices {
 	
 	public StatusMessage register(Account account){
 		try{
+			em.persist(account.getUser());
 			em.persist(account);
 			accountEventSrc.fire(account);
 			return new StatusMessage(true, "Created");
