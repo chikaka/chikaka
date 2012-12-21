@@ -10,7 +10,7 @@ import tn.espritcs.chikaka.util.StatusMessage;
 
 import javax.ejb.Stateless;
 import javax.enterprise.event.Event;
-import javax.inject.Inject;
+import javax.inject.Inject; 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;

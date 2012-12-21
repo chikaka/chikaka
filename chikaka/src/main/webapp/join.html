@@ -62,56 +62,56 @@
 			<!-- Nouvelle partie -->
 			<div class="tab-content">
 				<div id="new" class="well tab-pane">
-					<form class="form-horizontal">
+					<form id="new-game-form" class="form-horizontal">
 						<div class="control-group">
-							<label class="control-label" for="humanplayerscount">Crédit
+							<label class="control-label" for="initialCredit">Crédit
 								initial </label>
 							<div class="controls">
-								<select id="humanplayerscount">
-									<option>1000</option>
-									<option>2000</option>
-									<option>3000</option>
-									<option>5000</option>
-									<option>8000</option>
-									<option>13000</option>
+								<select name="initialCredit" id="initialCredit">
+									<option value="1000"> 1000</option>
+									<option value="2000"> 2000</option>
+									<option value="3000"> 3000</option>
+									<option value="5000"> 5000</option>
+									<option value="8000"> 8000</option>
+									<option value="13000">13000</option>
 								</select>
 							</div>
 						</div>
 						<div class="control-group">
-							<label class="control-label" for="aiplayerscount"> Nbr
+							<label class="control-label" for="aiPlayersCount"> Nbr
 								Des NPC</label>
 							<div class="controls">
-								<select id="aiplayerscount">
-									<option>1</option>
-									<option>2</option>
-									<option>3</option>
-									<option>5</option>
-									<option>8</option>
-									<option>13</option>
+								<select name="aiPlayersCount"  id="aiPlayersCount">
+									<option value="1">1</option>
+									<option value="2">2</option>
+									<option value="3">3</option>
+									<option value="5">5</option>
+									<option value="8">8</option>
+									<option value="13">13</option>
 								</select>
 							</div>
 						</div>
 						<div class="control-group">
-							<label class="control-label" for="humanplayerscount">Nbr
+							<label class="control-label" for="humanplayersCount">Nbr
 								De Joueur </label>
 							<div class="controls">
-								<select id="humanplayerscount">
-									<option>1</option>
-									<option>2</option>
-									<option>3</option>
-									<option>5</option>
-									<option>8</option>
-									<option>13</option>
+								<select name="humanplayersCount" id="humanplayersCount">
+									<option value="1">1</option>
+									<option value="2">2</option>
+									<option value="3">3</option>
+									<option value="5">5</option>
+									<option value="8">8</option>
+									<option value="13">13</option>
 								</select>
 							</div>
 						</div>
 
 						<div class="control-group">
 							<div class="controls">
-								<label class="checkbox"> <input type="checkbox" />
+								<label class="checkbox"> <input type="checkbox" name="private"/>
 										Privée </label>
-								<button type="submit" class="btn btn-primary">Valider</button>
-								<button type="reset" class="btn">Cancel</button>
+								<button id="submit" type="submit" class="btn btn-primary">Valider</button>
+								<button id="reset" type="reset" class="btn">Cancel</button>
 							</div>
 						</div>
 					</form>
@@ -170,10 +170,13 @@
 	</div>
 
 
-	<script type="text/javascript" src="js/libs/jquery-1.8.3.min.js"></script> 
-	<script type="text/javascript" src="js/libs/jquery.base64.min.js"></script>
-    <script type="text/javascript" src="js/chikaka.api.js"></script> 
-    <script type="text/javascript" src="js/content.js"></script>
+	 <script type="text/javascript" src="js/libs/jquery-1.8.3.min.js"></script> 
+	 <script type="text/javascript" src="js/libs/jquery.base64.min.js"></script>
+	 <script type="text/javascript" src="js/libs/form2js/form2js.js"></script>
+	 <script type="text/javascript" src="js/libs/form2js/jquery.toObject.js"></script>  
+	 <script type="text/javascript" src="js/chikaka.api.js"></script> 
+	 <script type="text/javascript" src="js/content.js"></script>
      <script src="js/libs/bootstrap/js/bootstrap.min.js"></script> 
+
 </body>
 </html>

@@ -9,7 +9,7 @@ import tn.espritcs.chikaka.util.StatusMessage;
 @Stateless
 public class GuestServices {
 	@Inject AccountServices accountServices;
-	
+	 
 	public StatusMessage signUp(AccountWrapper account){
 		StatusMessage status = new StatusMessage(false, "KO");
 		try{
