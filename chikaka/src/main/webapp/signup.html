@@ -22,23 +22,44 @@
             <div class="span9 well">
               <form id="signup-form" class="form-horizontal">
                 <fieldset>
-                  <legend>Connectez vous pour commencer à jouer</legend>
+                  <legend>Sign UP</legend> 
+                  <h5>Account information</h5> 
+                  <div class="control-group">
+                    <label for="input01" class="control-label">Email</label>
+                    <div class="controls">
+                      <input type="text" name="email" class="input-xlarge" value="" />
+                    </div>
+                  </div>
+                  <div class="control-group">
+                    <label for="input01" class="control-label">First Name</label>
+                    <div class="controls">
+                      <input type="text" name="firstName" class="input-xlarge"  value="" />
+                    </div>
+                  </div>
+                  <div class="control-group">
+                    <label for="input01" class="control-label">Last Name</label>
+                    <div class="controls">
+                      <input type="text" name="lastName" class="input-xlarge"  value="" />
+                    </div>
+                  </div>
+                  <h5>Login information</h5>
                   <div class="control-group">
                     <label for="input01" class="control-label">Login</label>
                     <div class="controls">
-                      <input type="text" id="userName" class="input-xlarge" />
+                      <input type="text" name="userName" class="input-xlarge"  value="" />
                     </div>
                   </div>
                   <div class="control-group">
-                    <label for="input01" class="control-label">Mot de passe</label>
+                    <label for="input01" class="control-label">Password</label>
                     <div class="controls">
-                      <input type="text" id="dispatcherCriteria" class="input-xlarge" />
+                      <input type="password" name="dispatcherCriteria" class="input-xlarge"  value="" />
                     </div>
                   </div> 
                   <div class="form-actions">
-                    <button class="btn btn-primary" type="submit">Sign in</button>
-                    <a href="signup.html" class="btn">Sign up</a>
+                    <button class="btn btn-primary" type="submit">Sign UP</button>
+                    <a href="index.html" class="btn">Cancel</a>
                   </div>
+                  <input type="hidden" name="avatar" class="input-xlarge"  value="avatar.png" />
                 </fieldset>
               </form>
             </div>

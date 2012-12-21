@@ -19,7 +19,8 @@ public class Account implements Serializable {
 	@NotNull @Column(length=50             )private String lastName ;
 	@NotNull @Column(length=50             )private String firstName;
 
-	@NotNull @OneToMany(mappedBy = "account", fetch=FetchType.EAGER)
+	@OneToMany(mappedBy = "account", cascade=CascadeType.ALL)
+	@Column(nullable=true)
 	private Set<Session> sessions;
 	
 	@OneToOne

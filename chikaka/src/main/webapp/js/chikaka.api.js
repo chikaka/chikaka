@@ -1,6 +1,6 @@
 
 
-function Chikaka (){   
+var Chikaka = new function(){    
 	var HTTP_GET  = "GET";
 	var HTTP_POST = "POST";
 	var HTTP_PUT  = "PUT";
@@ -8,22 +8,22 @@ function Chikaka (){
 	this.BASE_URL = "http://localhost:8080/chikaka/"; 
 	this.default_user = "guest";
 	this.default_pwd = "guest";
+	 
 	
-	
-	this.get = function (url, success, failure) {
-		this.authenticatedAjax(this.url(url), HTTP_GET, "", success, failure);
+	this.get = function (url, complete) {
+		this.authenticatedAjax(this.url(url), HTTP_GET, "", complete);
 	} 
 
-	this.post = function (url, data, success, failure) { 
-		this.authenticatedAjax(this.url(url), HTTP_POST, data, success, failure);
+	this.post = function (url, data, complete) { 
+		this.authenticatedAjax(this.url(url), HTTP_POST, data, complete);
 	}  
 
-	this.remove = function (url, data, success, failure) { 
-		this.authenticatedAjax(this.url(url), HTTP_DELETE, data, success, failure);
+	this.remove = function (url, data, complete) { 
+		this.authenticatedAjax(this.url(url), HTTP_DELETE, data, complete);
 	}  
 
-	this.put = function (url, data, success, failure) { 
-		this.authenticatedAjax(this.url(url), HTTP_PUT, data, success, failure);
+	this.put = function (url, data, complete) { 
+		this.authenticatedAjax(this.url(url), HTTP_PUT, data, complete);
 	} 
 	
 	
@@ -51,7 +51,7 @@ function Chikaka (){
 	  }
 	}
 
-	this.authenticatedAjax = function(url, method, data, success, failure){
+	this.authenticatedAjax = function(url, method, data, complete){
 		chk = this;
 		$.ajax({
 		    type: method,
@@ -61,29 +61,26 @@ function Chikaka (){
 		        xhr.setRequestHeader("Authorization", chk.getAuthCookie());
 		    },
 		    data: data,
-		    dataType: "json",
-		    success: success,
-		    error: failure
-		});
+		    dataType: "json", 
+		    complete: complete
+		}); 
 	}
 
 	this.listAllAccounts = function (){
 		initAuth("administrator", "chikaka");
 		url     = "http://localhost:8080/chikaka/rest/admin/accounts";
 		data    = null;
-		method  = HTTP_GET;
-		success = function(response){
-			accounts = "<ul>";
-			for(var i = 0; i< response.length; i++){
-				accounts +="<li>" + response[i].firstName + ", " + response[i].lastName + " -> " + response[i].email + "(" + response[i].userName + ")" +"</li>";
-			}
-			accounts +="</ul>";
-			$("#container").html(accounts);
-		};
-		failure = function(reponse){
+		method  = HTTP_GET;		 
+		complete = function(jqXHR, textStatus){
 			alert("wa333");
 		};
-		this.authenticatedAjax(url, method, data, success, failure);
-	}
+		this.authenticatedAjax(url, method, data, complete);
+	} 
+	 
+	if(!this.getAuthCookie()){
+		alert("azdaz");
+		this.initAuth (this.default_user , this.default_pwd ); 
+	} 
 };
+ 
  
