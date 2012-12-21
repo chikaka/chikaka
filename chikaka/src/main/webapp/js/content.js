@@ -2,10 +2,29 @@
  
 var chikaka = chikaka || new Chikaka();
 $(document).ready(function() {
+
+	chikaka.initAuth("emir", "wa333");
+	//#adding game tab
+	
+	$("#new-game-form").submit(function(){
+		var data = $(this).toObject(); 
+		console.log(JSON.stringify(data));
+		chikaka.post("rest/user/games", JSON.stringify(data),  gamesCreateSucceded , gamesCreateFailed)
+		return false;
+	});
+	
 	//#join tab 
 	chikaka.get("rest/user/games", gamesList, defaultFailure);
  	 
 }); 
+
+
+function gamesCreateSucceded(response){  
+	console.log(response);
+}
+function gamesCreateFailed(response){  
+	console.log(response);
+}
 
 
 function gamesList(response){ 
@@ -18,13 +37,14 @@ function gamesList(response){
 	html+=		"</tr>";
 	html+=	"</thead>";
 	html+=	"<tbody>";
-	for(var i = 0; i< response.length; i++){
+	
+	$.each( response, function(i, game){
 		html +="<tr>";
-		html += "<td>" + response[i].aiPlayersCount +"</td>";
-		html += "<td>" + response[i].humanplayersCount +"</td>"; 
-		html += "<td>" + response[i].initialCredit +"</td>";
-		html += "</tr>";
-	}
+		html += "<td>" + game.aiPlayersCount +"</td>";
+		html += "<td>" + game.humanplayersCount +"</td>"; 
+		html += "<td>" + game.initialCredit +"</td>";
+		html += "</tr>"; 
+	});	 
 	
 	html +=	"</tbody>";       
 	html +=	"</table>";   

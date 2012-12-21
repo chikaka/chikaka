@@ -10,8 +10,7 @@ function Chikaka (){
 	this.default_pwd = "guest";
 	
 	
-	this.get = function (url, success, failure) { 
-		this.initAuth("emir", "wa333");
+	this.get = function (url, success, failure) {
 		this.authenticatedAjax(this.url(url), HTTP_GET, "", success, failure);
 	} 
 
