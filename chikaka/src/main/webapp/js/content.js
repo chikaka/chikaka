@@ -1,19 +1,17 @@
 
  
 var Chikaka = Chikaka || new Chikaka();
-$(document).ready(function() {
-
-	Chikaka.initAuth("emir", "wa333");
+$(document).ready(function() { 
 	//#adding game tab
 	
 	$("#new-game-form").submit(function(){
 		var data = $(this).toObject();  
-		Chikaka.post("rest/user/games", JSON.stringify(data),  gamesCreateComplete);
+		Chikaka.post("rest/user/game", JSON.stringify(data),  gamesCreateComplete);
 		return false;
 	});
 	
 	//#join tab 
-	Chikaka.get("rest/user/games", gamesListComplete);
+	Chikaka.get("rest/user/game", gamesListComplete);
  	 
 }); 
 

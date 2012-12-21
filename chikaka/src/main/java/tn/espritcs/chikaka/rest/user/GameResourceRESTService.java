@@ -22,7 +22,7 @@ import tn.espritcs.chikaka.service.AccountServices;
 import tn.espritcs.chikaka.service.GameServices;
 import tn.espritcs.chikaka.util.StatusMessage;
 
-@Path("/user/games")
+@Path("/user/game")
 @RequestScoped
 public class GameResourceRESTService {
 	@Context
@@ -67,6 +67,7 @@ public class GameResourceRESTService {
 	}
 	
 	@POST
+	@Path("/login")
 	@RolesAllowed({"User"})
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
