@@ -13,14 +13,13 @@ $(document).ready(function() {
 
 function signInComplete(jqXHR, textStatus){ 
 	switch (jqXHR.statusText) {
-	case "OK":
-		$(location).attr("href", "join.html");
-		break; 
-	default:  
-		$(".control-group").addClass("error"); 
-		break;
-	}
-	//document.location.reload(true);
+		case "OK":
+			$(location).attr("href", "join.html");
+			break; 
+		default:  
+			$(".control-group").addClass("error"); 
+			break;
+	} 
 }
 
  

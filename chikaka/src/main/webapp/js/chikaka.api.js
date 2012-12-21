@@ -77,8 +77,7 @@ var Chikaka = new function(){
 		this.authenticatedAjax(url, method, data, complete);
 	} 
 	 
-	if(!this.getAuthCookie()){
-		alert("azdaz");
+	if(!this.getAuthCookie()){ 
 		this.initAuth (this.default_user , this.default_pwd ); 
 	} 
 };
