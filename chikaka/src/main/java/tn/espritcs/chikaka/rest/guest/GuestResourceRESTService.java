@@ -2,7 +2,9 @@ package tn.espritcs.chikaka.rest.guest;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
+import javax.management.MBeanServer;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.MediaType;
@@ -14,6 +16,7 @@ import javax.annotation.security.RolesAllowed;
 import tn.espritcs.chikaka.model.wrappers.AccountWrapper;
 import tn.espritcs.chikaka.service.GuestServices;
 import tn.espritcs.chikaka.util.StatusMessage;
+import org.jboss.mx.util.MBeanServerLocator;
 
 @Path("/guest")
 @RequestScoped
@@ -35,5 +38,12 @@ public class GuestResourceRESTService {
 	   }
 	   builder.entity(status.getMessage());
 	   return builder.build();
+   }
+   
+   @GET
+   @Path("/test")
+   @RolesAllowed({"Guest"})
+   public void getMBeanServer(){
+	   MBeanServer server = MBeanServerLocator.locateJBoss();
    }
 }

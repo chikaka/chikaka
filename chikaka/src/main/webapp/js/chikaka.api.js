@@ -13,31 +13,31 @@ function Chikaka (){
 	this.get = function (url, success, failure) { 
 		this.initAuth("emir", "wa333");
 		this.authenticatedAjax(this.url(url), HTTP_GET, "", success, failure);
-	} 
+	};
 
 	this.post = function (url, data, success, failure) { 
 		this.authenticatedAjax(this.url(url), HTTP_POST, data, success, failure);
-	}  
+	}; 
 
 	this.remove = function (url, data, success, failure) { 
 		this.authenticatedAjax(this.url(url), HTTP_DELETE, data, success, failure);
-	}  
+	}; 
 
 	this.put = function (url, data, success, failure) { 
 		this.authenticatedAjax(this.url(url), HTTP_PUT, data, success, failure);
-	} 
+	};
 	
 	
 	this.url = function (url) {
 		return this.BASE_URL + url; 
-	} 
+	};
 	this.alert = function(msg){
 		alert(msg); 
-	}
+	};
 	this.initAuth =  function (username, password){ 
 	    var header = "Basic " + $.base64.encode(username + ":" + password);
 	    document.cookie = "Authorization=" + header;
-	}
+	};
 
 	this.getAuthCookie = function () {
 	   var cn = "Authorization=";
@@ -50,7 +50,7 @@ function Chikaka (){
 	   } else {
 	       return "";
 	  }
-	}
+	};
 
 	this.authenticatedAjax = function(url, method, data, success, failure){
 		chk = this;
@@ -66,7 +66,7 @@ function Chikaka (){
 		    success: success,
 		    error: failure
 		});
-	}
+	};
 
 	this.listAllAccounts = function (){
 		initAuth("administrator", "chikaka");
@@ -85,6 +85,6 @@ function Chikaka (){
 			alert("wa333");
 		};
 		this.authenticatedAjax(url, method, data, success, failure);
-	}
+	};
 };
  
