@@ -21,9 +21,11 @@ public class Game implements Serializable {
 	private int  humanplayersCount;
 
 	@OneToMany(mappedBy = "game")
+	@Column(nullable=true)
 	private List<Session> sessions;
 
 	@OneToMany(mappedBy = "game")
+ 	@Column(nullable=true)
 	private Set<GameRule> rules;
 
 	public Game() {}

@@ -1,15 +1,19 @@
 package tn.espritcs.chikaka.model.wrappers;
 
+import java.util.Date;
+
 import tn.espritcs.chikaka.model.game.Game;
 
 public class GameWrapper {
 	private Game game; 
 	
 	public GameWrapper(Game game){
-		this.game = game;
+		this.game = game; 
+		this.game.setDate(new Date());
 	}
 	public GameWrapper(){
 		this.game = new Game();
+		this.game.setDate(new Date());
 	}
 	
 	public Game toGame(){
