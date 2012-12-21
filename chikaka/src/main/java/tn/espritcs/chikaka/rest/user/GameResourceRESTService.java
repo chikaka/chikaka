@@ -18,6 +18,7 @@ import javax.ws.rs.core.SecurityContext;
 import javax.annotation.security.RolesAllowed;
 
 import tn.espritcs.chikaka.model.wrappers.GameWrapper;
+import tn.espritcs.chikaka.service.AccountServices;
 import tn.espritcs.chikaka.service.GameServices;
 import tn.espritcs.chikaka.util.StatusMessage;
 
@@ -29,6 +30,9 @@ public class GameResourceRESTService {
 	
 	@Inject
 	private GameServices gameServices;
+	
+	@Inject
+	private AccountServices accountServices;
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
@@ -55,6 +59,23 @@ public class GameResourceRESTService {
 		StatusMessage status = gameServices.createGame(game, userName);
 		if(status.getStatus()){
 			response = Response.status(Status.CREATED);
+		}else{
+			response = Response.status(Status.BAD_REQUEST);
+		}
+		response.entity(status.getMessage());
+		return response.build();
+	}
+	
+	@POST
+	@RolesAllowed({"User"})
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response login(){
+		ResponseBuilder response = null;
+		String userName = securityContext.getUserPrincipal().getName();
+		StatusMessage status = accountServices.login(userName);
+		if(status.getStatus()){
+			response = Response.status(Status.OK);
 		}else{
 			response = Response.status(Status.BAD_REQUEST);
 		}

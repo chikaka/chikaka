@@ -5,6 +5,7 @@ import java.util.List;
 
 import tn.espritcs.chikaka.model.authentification.SystemRole;
 import tn.espritcs.chikaka.model.game.Account;
+import tn.espritcs.chikaka.model.game.Session;
 import tn.espritcs.chikaka.model.wrappers.AccountWrapper;
 import tn.espritcs.chikaka.util.StatusMessage;
 
@@ -175,5 +176,23 @@ public class AccountServices {
 	    if(!special){return new StatusMessage(true, "No special character present"   );}
 	    
 	    return new StatusMessage(false, "Password accepted");
+	}
+
+	public StatusMessage login(String userName) {
+		try{			
+			Account account = lookupAccountByUserName(userName).toAccount();
+			if(account.getActiveSession() == null){
+				Session session = new Session();
+				session.setAccount(account);
+				session.setActive(true);
+				em.persist(session);
+				em.persist(account);
+				return new StatusMessage(true, "Logged in");
+			}else{
+				return new StatusMessage(false, "User already logged in");
+			}
+		}catch(Exception e){
+			return new StatusMessage(false, e.getMessage());
+		}
 	}
 }
