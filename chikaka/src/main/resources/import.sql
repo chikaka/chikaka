@@ -25,3 +25,7 @@ update Account set user_id=(select id from SystemUser where UserName='chedi' ) w
 update Account set user_id=(select id from SystemUser where UserName='emir'  ) where firstName = 'douda1';
 update Account set user_id=(select id from SystemUser where UserName='adel'  ) where firstName = 'douda2';
 update Account set user_id=(select id from SystemUser where UserName='khaled') where firstName = 'douda3';
+
+
+INSERT INTO game ( aiplayerscount , date , humanplayerscount, initialcredit) VALUES (5, now(), 5, 1000);
+INSERT INTO game ( aiplayerscount , date , humanplayerscount, initialcredit) VALUES (4, now(), 6, 3000);
