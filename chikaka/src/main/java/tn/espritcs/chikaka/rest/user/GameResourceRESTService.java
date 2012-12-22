@@ -65,4 +65,20 @@ public class GameResourceRESTService {
 		response.entity(status.getMessage());
 		return response.build();
 	}
+	
+	@POST
+	@Path("/logout")
+	@RolesAllowed({"User"})
+	public Response logout(){
+		ResponseBuilder response = null;
+		String userName = securityContext.getUserPrincipal().getName();
+		StatusMessage status = gameServices.logout(userName);
+		if(status.getStatus()){
+			response = Response.status(Status.OK);
+		}else{
+			response = Response.status(Status.BAD_REQUEST);
+		}
+		response.entity(status.getMessage());
+		return response.build();
+	}
 }

@@ -4,7 +4,9 @@ var Chikaka = Chikaka || new Chikaka();
 $(document).ready(function() { 
 	//#adding game tab
 	
-	$("#logout").click(Chikaka.authLogout);
+	$("#logout").click(function() { 
+		Chikaka.post("rest/user/game/logout", null,  logoutComplete); 
+	});
 	
 	$("#new-game-form").submit(function(){
 		var data = $(this).toObject();  
@@ -17,7 +19,19 @@ $(document).ready(function() {
  	 
 }); 
 
- 
+function logoutComplete(jqXHR, textStatus){
+	console.log(jqXHR);
+	console.log(textStatus); 
+	switch (jqXHR.statusText){
+		case "OK":  
+			Chikaka.authLogout();
+			break; 
+		default:    
+			break;
+	} 
+}
+
+
 function gamesCreateComplete(jqXHR, textStatus){
 	document.location.reload(true);
 }
@@ -42,7 +56,7 @@ function gamesListComplete(jqXHR, textStatus){
 				html += "<td>" + game.aiPlayersCount +"</td>";
 				html += "<td>" + game.humanplayersCount +"</td>"; 
 				html += "<td>" + game.initialCredit +"</td>";
-				html +=  '<td><a class="btn" href="#"><i class="icon-play-circle"></i></a></td>';
+				html +=  '<td><a class="btn" href="game.html"><i class="icon-play-circle"></i></a></td>';
 				html += "</tr>"; 
 			});	 
 			
