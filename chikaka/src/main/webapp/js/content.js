@@ -31,6 +31,7 @@ function gamesListComplete(jqXHR, textStatus){
 			html+=			"<th>Nbr des NPCs</th>";
 			html+=			"<th>Nbr des Joueur</th>";
 			html+=			"<th>Crédit</th>";
+			html+=			"<th>Play</th>";
 			html+=		"</tr>";
 			html+=	"</thead>";
 			html+=	"<tbody>"; 
@@ -39,6 +40,7 @@ function gamesListComplete(jqXHR, textStatus){
 				html += "<td>" + game.aiPlayersCount +"</td>";
 				html += "<td>" + game.humanplayersCount +"</td>"; 
 				html += "<td>" + game.initialCredit +"</td>";
+				html +=  '<td><a class="btn" href="#"><i class="icon-play-circle"></i></a></td>';
 				html += "</tr>"; 
 			});	 
 			

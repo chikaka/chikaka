@@ -1,22 +1,28 @@
 
  
 var Chikaka = Chikaka || {};
+var data = {};
 $(document).ready(function() { 
 	$("#signin-form").submit(function(){
-		var data = $(this).toObject();  
-		Chikaka.initAuth (data.userName, data.userPassword);
-		Chikaka.post("rest/user/game/login", null,  signInComplete);
+		data = $(this).toObject();   
+		Chikaka.post("rest/guest/login", JSON.stringify(data),  signInComplete);
 		return false;
 	});
-}); 
+});  
 
-
-function signInComplete(jqXHR, textStatus){ 
-	switch (jqXHR.statusText) {
+function signInComplete(jqXHR, textStatus){  
+	switch (jqXHR.statusText){
 		case "OK":
+			Chikaka.initAuth(data.userName, data.password);
 			$(location).attr("href", "join.html");
 			break; 
-		default:  
+		default:   
+			html = '<div class="alert alert-error alert-block">';
+			html+=	'<button type="button" class="close" data-dismiss="alert">&times;</button>';
+			html+=  jqXHR.responseText;
+			html+= '</div>';
+			$(".alert-block").remove();
+			$("#signin-form").prepend(html);
 			$(".control-group").addClass("error"); 
 			break;
 	} 

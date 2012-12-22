@@ -6,8 +6,7 @@ $(document).ready(function() {
 		var data = $(this).toObject();    
 		Chikaka.post("rest/guest/signup", JSON.stringify(data),  signUpComplete)
 		return false;
-	});
-	 
+	}); 
  	 
 }); 
 
