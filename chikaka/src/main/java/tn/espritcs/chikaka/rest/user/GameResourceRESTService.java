@@ -65,22 +65,4 @@ public class GameResourceRESTService {
 		response.entity(status.getMessage());
 		return response.build();
 	}
-	
-	@POST
-	@Path("/login")
-	@RolesAllowed({"User"})
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response login(){
-		ResponseBuilder response = null;
-		String userName = securityContext.getUserPrincipal().getName();
-		StatusMessage status = accountServices.login(userName);
-		if(status.getStatus()){
-			response = Response.status(Status.OK);
-		}else{
-			response = Response.status(Status.BAD_REQUEST);
-		}
-		response.entity(status.getMessage());
-		return response.build();
-	}
 }

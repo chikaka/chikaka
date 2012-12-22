@@ -7,6 +7,7 @@ import tn.espritcs.chikaka.model.authentification.SystemRole;
 import tn.espritcs.chikaka.model.game.Account;
 import tn.espritcs.chikaka.model.game.Session;
 import tn.espritcs.chikaka.model.wrappers.AccountWrapper;
+import tn.espritcs.chikaka.model.wrappers.LoginWrapper;
 import tn.espritcs.chikaka.util.StatusMessage;
 
 import javax.ejb.Stateless;
@@ -45,9 +46,13 @@ public class AccountServices {
 	}
 	
 	public AccountWrapper lookupAccountByUserName(String userName){
-		Query query = em.createQuery("SELECT a FROM Account a WHERE a.user.userName = :userName");
-		query.setParameter("userName", userName);
-		return new AccountWrapper((Account) query.getSingleResult());
+		try{
+			Query query = em.createQuery("SELECT a FROM Account a WHERE a.user.userName = :userName");
+			query.setParameter("userName", userName);
+			return new AccountWrapper((Account) query.getSingleResult());
+		}catch(Exception e){
+			return null;
+		}
 	}
 	
 	public AccountWrapper lookupAccountById(Integer id) {
@@ -178,9 +183,18 @@ public class AccountServices {
 	    return new StatusMessage(false, "Password accepted");
 	}
 
-	public StatusMessage login(String userName) {
-		try{			
-			Account account = lookupAccountByUserName(userName).toAccount();
+	public StatusMessage login(LoginWrapper login) {
+		try{
+			AccountWrapper accountW = lookupAccountByUserName(login.getUserName());
+			if(accountW == null){
+				return new StatusMessage(false, "Unknown user");
+			}
+			Account account = accountW.toAccount();
+			
+			if(!account.getUser().checkPassword(login.getPassword())){
+				return new StatusMessage(false, "Wrong password");
+			}
+			
 			if(account.getActiveSession() == null){
 				Session session = new Session();
 				session.setAccount(account);
