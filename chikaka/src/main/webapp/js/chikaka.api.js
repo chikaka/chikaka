@@ -1,6 +1,7 @@
 
 
-var Chikaka = new function(){    
+var Chikaka = new function(){   
+	var chk = this;
 	var HTTP_GET  = "GET";
 	var HTTP_POST = "POST";
 	var HTTP_PUT  = "PUT";
@@ -12,19 +13,19 @@ var Chikaka = new function(){
 	
 	this.get = function (url, complete) {
 		this.authenticatedAjax(this.url(url), HTTP_GET, "", complete);
-	} 
+	} ;
 
 	this.post = function (url, data, complete) { 
 		this.authenticatedAjax(this.url(url), HTTP_POST, data, complete);
-	}  
+	}  ;
 
 	this.remove = function (url, data, complete) { 
 		this.authenticatedAjax(this.url(url), HTTP_DELETE, data, complete);
-	}  
+	}  ;
 
 	this.put = function (url, data, complete) { 
 		this.authenticatedAjax(this.url(url), HTTP_PUT, data, complete);
-	} 
+	} ;
 	
 	
 	this.url = function (url) {
@@ -64,7 +65,7 @@ var Chikaka = new function(){
 		    dataType: "json", 
 		    complete: complete
 		}); 
-	}
+	};
 
 	this.listAllAccounts = function (){
 		initAuth("administrator", "chikaka");
@@ -75,11 +76,15 @@ var Chikaka = new function(){
 			alert("wa333");
 		};
 		this.authenticatedAjax(url, method, data, complete);
-	} 
-	 
+	}  ;
+	this.authLogout = function (){
+		chk.initAuth (chk.default_user , chk.default_pwd ); 
+		$(location).attr("href", "index.html"); 
+	} ;
+	
 	if(!this.getAuthCookie()){ 
 		this.initAuth (this.default_user , this.default_pwd ); 
-	} 
+	} ;
 };
  
  

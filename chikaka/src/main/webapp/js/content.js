@@ -4,6 +4,8 @@ var Chikaka = Chikaka || new Chikaka();
 $(document).ready(function() { 
 	//#adding game tab
 	
+	$("#logout").click(Chikaka.authLogout);
+	
 	$("#new-game-form").submit(function(){
 		var data = $(this).toObject();  
 		Chikaka.post("rest/user/game", JSON.stringify(data),  gamesCreateComplete);
